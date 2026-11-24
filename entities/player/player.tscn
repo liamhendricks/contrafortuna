@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://1nodcj3l2ej2"]
+
+[ext_resource type="Script" uid="uid://cjso0mkrjq1x" path="res://entities/character.gd" id="1_symyc"]
+[ext_resource type="Script" uid="uid://oef66tff646d" path="res://components/movement_component.gd" id="2_abrql"]
+[ext_resource type="Script" uid="uid://dkd1wr1g6ah3d" path="res://components/state_machine/state_machine.gd" id="3_sglur"]
+[ext_resource type="Script" uid="uid://dq70ktacuw12y" path="res://components/state_machine/state.gd" id="4_bls4j"]
+[ext_resource type="Script" uid="uid://dwrdhje56wf8o" path="res://components/state_machine/states/idle_state.gd" id="5_fkugw"]
+[ext_resource type="PackedScene" uid="uid://b5g2csix3xpux" path="res://components/camera_component.tscn" id="6_8fjmc"]
+[ext_resource type="Script" uid="uid://b7pnlfpa67sn3" path="res://components/state_machine/states/jump_state.gd" id="6_wvtmh"]
+[ext_resource type="Script" uid="uid://bk5cjyqbabmfn" path="res://components/state_machine/states/run_state.gd" id="7_7thud"]
+[ext_resource type="Script" uid="uid://b1fwxpc84pplc" path="res://components/state_machine/states/fall_state.gd" id="7_a1qjk"]
+[ext_resource type="Script" uid="uid://b3bxwqo0x6ewr" path="res://components/model_provider_component.gd" id="7_qiwj3"]
+[ext_resource type="Script" uid="uid://bdq1sflcpykqb" path="res://components/input_component.gd" id="8_26q78"]
+[ext_resource type="Script" uid="uid://bevkumw4p1b83" path="res://components/state_machine/player_state_controller.gd" id="11_7thud"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_symyc"]
+
+[sub_resource type="Resource" id="Resource_8fjmc"]
+script = ExtResource("5_fkugw")
+state_name = "idle"
+metadata/_custom_type_script = "uid://dwrdhje56wf8o"
+
+[sub_resource type="Resource" id="Resource_a1qjk"]
+script = ExtResource("6_wvtmh")
+state_name = "jump"
+metadata/_custom_type_script = "uid://b7pnlfpa67sn3"
+
+[sub_resource type="Resource" id="Resource_j3ovn"]
+script = ExtResource("7_7thud")
+state_name = "run"
+metadata/_custom_type_script = "uid://bk5cjyqbabmfn"
+
+[sub_resource type="Resource" id="Resource_afbqv"]
+script = ExtResource("7_a1qjk")
+state_name = "fall"
+metadata/_custom_type_script = "uid://b1fwxpc84pplc"
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_7thud"]
+
+[node name="Player" type="CharacterBody3D" unique_id=567340969]
+script = ExtResource("1_symyc")
+metadata/_custom_type_script = "uid://cjso0mkrjq1x"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1240214755]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_symyc")
+
+[node name="StateMachine" type="Node" parent="." unique_id=1563544989 node_paths=PackedStringArray("state_controller", "character")]
+script = ExtResource("3_sglur")
+states = Array[ExtResource("4_bls4j")]([SubResource("Resource_8fjmc"), SubResource("Resource_a1qjk"), SubResource("Resource_j3ovn"), SubResource("Resource_afbqv")])
+state_controller = NodePath("../PlayerStateController")
+character = NodePath("..")
+metadata/_custom_type_script = "uid://dkd1wr1g6ah3d"
+
+[node name="ModelProviderComponent" type="Node3D" parent="." unique_id=1947420635]
+script = ExtResource("7_qiwj3")
+metadata/_custom_type_script = "uid://b3bxwqo0x6ewr"
+
+[node name="CSGMesh3D" type="CSGMesh3D" parent="ModelProviderComponent" unique_id=192051224]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_7thud")
+
+[node name="CameraComponent" parent="." unique_id=1349793780 instance=ExtResource("6_8fjmc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4)
+
+[node name="InputComponent" type="Node" parent="." unique_id=1523403257]
+script = ExtResource("8_26q78")
+metadata/_custom_type_script = "uid://bdq1sflcpykqb"
+
+[node name="PlayerStateController" type="Node" parent="." unique_id=2058224608 node_paths=PackedStringArray("input_component")]
+script = ExtResource("11_7thud")
+input_component = NodePath("../InputComponent")
+metadata/_custom_type_script = "uid://bevkumw4p1b83"
+
+[node name="MovementComponent" type="Node" parent="." unique_id=1316227937 node_paths=PackedStringArray("state_controller", "body_to_move")]
+script = ExtResource("2_abrql")
+state_controller = NodePath("../PlayerStateController")
+body_to_move = NodePath("..")
+max_speed = 20.0
+acceleration = 75.0
+drag = 75.0
+metadata/_custom_type_script = "uid://oef66tff646d"
