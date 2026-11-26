@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MovementData" format=3 uid="uid://cc7eyeaxad37d"]
+
+[ext_resource type="Script" uid="uid://c7npvh8kjjpnv" path="res://data/MovementData.gd" id="1_ophb8"]
+
+[resource]
+script = ExtResource("1_ophb8")
+acceleration = 10.0
+gravity = 2.0
+drag = 100.0
+metadata/_custom_type_script = "uid://c7npvh8kjjpnv"

@@ -2,8 +2,14 @@
 
 [ext_resource type="Script" uid="uid://bsvabiksolffd" path="res://components/camera_component.gd" id="1_w06pb"]
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_w06pb"]
+
 [node name="CameraComponent" type="Node3D" unique_id=1349793780 node_paths=PackedStringArray("camera")]
 script = ExtResource("1_w06pb")
-camera = NodePath("Camera3D")
+camera = NodePath("SpringArm3D/Camera3D")
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=349946022]
+[node name="SpringArm3D" type="SpringArm3D" parent="." unique_id=935423840]
+shape = SubResource("SphereShape3D_w06pb")
+spring_length = 10.0
+
+[node name="Camera3D" type="Camera3D" parent="SpringArm3D" unique_id=349946022]

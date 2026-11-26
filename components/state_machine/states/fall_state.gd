@@ -1,25 +1,42 @@
 class_name FallState extends MoveState
 
 @export var coyote_time : float = 0.1
-@export var jump_buffer_time : float = 0.1
 
 var coyote_timer : float = 0.0
-var jump_buffer_timer : float = 0.0
 
-func enter(_data : Dictionary = {}) -> void:
+func enter(data : Dictionary = {}) -> void:
+	super(data)
 	coyote_timer = coyote_time
 
 func process(delta : float) -> void:
 	coyote_timer -= delta
 
-func physics_process(delta : float) -> void:
-	super(delta)
+func physics_process(_delta : float) -> void:
+	var ib : InputBucket = state_controller.get_input_bucket()
+
+	if ib.actions.has(InputBucket.MOVES.BURSTING):
+		machine.transition("burst")
+		return
+
 	if character.is_on_floor():
-		machine.transition("idle")
+		if ib.actions.has(InputBucket.MOVES.MOVING):
+			machine.transition("run")
+			return
+		else:
+			machine.transition("idle")
+			return
+
+	if ib.actions.has(InputBucket.MOVES.JUMPING) && can_jump():
+		machine.transition("jump")
+		return
+
+	if character.raycast_component.any_colliding() && character.character_data.can_slide():
+		machine.transition("wall_slide")
 		return
 
 func can_jump() -> bool:
-	if coyote_time > 0.0:
-		return true
+	if character.character_data.can_jump():
+		if coyote_timer > 0.0:
+			return true
 
 	return false

@@ -3,7 +3,6 @@ class_name Character
 
 @onready var model_provider_component : ModelProviderComponent = $ModelProviderComponent
 @onready var movement_component : MovementComponent = $MovementComponent
-@onready var state_machine : StateMachine = $StateMachine
+@onready var raycast_component : RaycastComponent = $RaycastComponent
 
-func _ready() -> void:
-	state_machine.init()
+@export var character_data : CharacterData

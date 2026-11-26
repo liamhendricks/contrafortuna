@@ -8,6 +8,10 @@ class_name StateMachine
 var _states : Dictionary[String, State] = {}
 var _current_state : State
 
+func _ready() -> void:
+	await character.ready
+	init()
+
 func init() -> void:
 	if len(states) == 0:
 		return
@@ -43,3 +47,9 @@ func _process(delta : float) -> void:
 		return
 
 	_current_state.process(delta)
+
+func _input(event : InputEvent) -> void:
+	if len(states) == 0 || _current_state == null:
+		return
+
+	_current_state.input(event)
