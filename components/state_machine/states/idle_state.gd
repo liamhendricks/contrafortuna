@@ -8,7 +8,8 @@ class_name IdleState
 func enter(data : Dictionary = {}) -> void:
 	super(data)
 	
-	#reset jumps / slides
+	#reset
+	character.character_data.active_burst = 0
 	character.character_data.active_jump = 0
 	character.character_data.active_slide = true
 
@@ -18,7 +19,7 @@ func physics_process(_delta : float) -> void:
 		machine.transition("jump")
 		return
 
-	if ib.actions.has(InputBucket.MOVES.BURSTING):
+	if ib.actions.has(InputBucket.MOVES.BURSTING) && can_burst():
 		machine.transition("burst")
 		return
 
@@ -29,6 +30,9 @@ func physics_process(_delta : float) -> void:
 		if ib.actions.has(InputBucket.MOVES.MOVING):
 			machine.transition("run")
 			return
+
+func can_burst() -> bool:
+	return character.character_data.can_burst()
 
 func can_jump() -> bool:
 	return true

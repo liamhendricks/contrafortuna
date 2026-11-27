@@ -13,6 +13,7 @@ func enter(data : Dictionary = {}) -> void:
 	character.movement_component.burst(-character.model_provider_component.basis.z, burst_power)
 	min_burst_timer = min_burst_time
 	burst_timer = burst_time
+	character.character_data.active_burst += 1
 
 func process(delta : float) -> void:
 	min_burst_timer -= delta
@@ -41,6 +42,6 @@ func physics_process(_delta : float) -> void:
 			return
 
 func can_jump() -> bool:
-	if min_burst_timer < 0.0:
+	if character.character_data.can_jump() && min_burst_timer < 0.0:
 		return true
 	return false

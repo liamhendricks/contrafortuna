@@ -14,7 +14,7 @@ func process(delta : float) -> void:
 func physics_process(_delta : float) -> void:
 	var ib : InputBucket = state_controller.get_input_bucket()
 
-	if ib.actions.has(InputBucket.MOVES.BURSTING):
+	if ib.actions.has(InputBucket.MOVES.BURSTING) && can_burst():
 		machine.transition("burst")
 		return
 
@@ -33,6 +33,9 @@ func physics_process(_delta : float) -> void:
 	if character.raycast_component.any_colliding() && character.character_data.can_slide():
 		machine.transition("wall_slide")
 		return
+
+func can_burst() -> bool:
+	return character.character_data.can_burst()
 
 func can_jump() -> bool:
 	if character.character_data.can_jump():
