@@ -6,18 +6,16 @@ class_name BurstState
 @export var burst_power : float = 5.0
 
 var min_burst_timer : float = 0.0
-var burst_timer : float = 0.0
 
 func enter(data : Dictionary = {}) -> void:
 	super(data)
 	character.movement_component.burst(-character.model_provider_component.basis.z, burst_power)
 	min_burst_timer = min_burst_time
-	burst_timer = burst_time
+	character.character_data.start_burst_timer()
 	character.character_data.active_burst += 1
 
 func process(delta : float) -> void:
 	min_burst_timer -= delta
-	burst_timer -= delta
 
 func physics_process(_delta : float) -> void:
 	var ib : InputBucket = state_controller.get_input_bucket()
@@ -30,7 +28,7 @@ func physics_process(_delta : float) -> void:
 		return
 
 	if !character.is_on_floor():
-		if burst_timer < 0.0:
+		if character.character_data.burst_timer.is_stopped():
 			machine.transition("fall")
 			return
 	else:

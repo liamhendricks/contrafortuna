@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://bdq1sflcpykqb" path="res://components/input_component.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://ccgqava2putw1" path="res://components/state_machine/states/burst_state.gd" id="10_gx6sm"]
 [ext_resource type="Script" uid="uid://bevkumw4p1b83" path="res://components/state_machine/player_state_controller.gd" id="11_7thud"]
+[ext_resource type="Resource" uid="uid://cb2j4dmowbuv8" path="res://data/resources/soar_movement.tres" id="12_221hk"]
 [ext_resource type="Script" uid="uid://bw11aquo18mpa" path="res://components/state_machine/states/wall_slide_state.gd" id="13_b2kln"]
 [ext_resource type="Resource" uid="uid://cc7eyeaxad37d" path="res://data/resources/wall_movement.tres" id="13_we0b7"]
 [ext_resource type="Script" uid="uid://b8wtdwajxu0mm" path="res://components/state_machine/states/wall_kick_state.gd" id="15_eyb6c"]
@@ -50,8 +51,8 @@ metadata/_custom_type_script = "uid://b1fwxpc84pplc"
 
 [sub_resource type="Resource" id="Resource_yqrof"]
 script = ExtResource("10_gx6sm")
-burst_power = 20.0
-movement_data = ExtResource("6_yqrof")
+burst_power = 24.0
+movement_data = ExtResource("12_221hk")
 state_name = "burst"
 metadata/_custom_type_script = "uid://ccgqava2putw1"
 

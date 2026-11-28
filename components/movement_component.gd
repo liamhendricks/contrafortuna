@@ -22,7 +22,7 @@ func jump(height : float = 2.0) -> void:
 
 func burst(dir : Vector3, power : float) -> void:
 	var burst_power : float = sqrt(2.0 * power * power)
-	velocity += dir * burst_power
+	velocity = dir * burst_power
 
 func _physics_process(delta : float) -> void:
 	if frozen:

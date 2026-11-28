@@ -6,3 +6,6 @@ class_name Character
 @onready var raycast_component : RaycastComponent = $RaycastComponent
 
 @export var character_data : CharacterData
+
+func _ready() -> void:
+	character_data.init(self)

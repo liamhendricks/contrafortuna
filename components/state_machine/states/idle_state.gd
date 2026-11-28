@@ -7,10 +7,10 @@ class_name IdleState
 
 func enter(data : Dictionary = {}) -> void:
 	super(data)
-	
+
 	#reset
-	character.character_data.active_burst = 0
 	character.character_data.active_jump = 0
+	character.character_data.active_burst = 0
 	character.character_data.active_slide = true
 
 func physics_process(_delta : float) -> void:
